@@ -9,47 +9,47 @@
  * @author blaze
  */
 import java.util.LinkedHashMap;
+import java.util.Arrays;
 
 public class App {
-    String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G", 
+    private String[] notes = {"C", "C#", "D", "D#", "E", "F", "F#", "G",
                        "G#", "A", "A#", "B"};
-    String[] solfegeNames = {"Do", "Re", "Mi", "Fa", "So", "La", "Ti"};
-    int[] solfegeNumbers = {0, 2, 4, 5, 7, 9, 11}; 
-    LinkedHashMap <String, Integer> solfege = new LinkedHashMap<>();
+    private String[] solfegeNames = {"Do", "Re", "Mi", "Fa", "So", "La", "Ti"};
+    private int[] solfegeNumbers = {0, 2, 4, 5, 7, 9, 11};
+    private LinkedHashMap <String, Integer> solfege = new LinkedHashMap<>();
     
     public void start(){
         for (int i = 0; i < (solfegeNames).length; i++){
             solfege.put(solfegeNames[i], solfegeNumbers[i]);
         }
-    
-        String[] scaleIn = getScale("D");
-        for (String note: scaleIn){
-            System.out.print(note + " ");
-        }     
+        System.out.println(getNote("C", "Do"));
+        System.out.println(getNote("C", "Re"));
+        System.out.println(getNote("C", "Mi"));
+        System.out.println(getNote("D", "Mi"));
+        System.out.println(getNote("A#", "Fa"));
     }
     
-    private String[] getScale(String noteScale){
-        String[] scale = new String[solfegeNames.length];
-        int startIndex = 0;
-        for (String note: notes){
-            if (note.equals(noteScale)){ break;}
-            startIndex++;
-        }
-        
-       // if (startIndex > notes.length + 1) TODO: Add error check
-       int index, counter = 0;
-
-       for (int jump : solfegeNumbers){
-           //remainder = startIndex % notes.length;
-           index = startIndex + jump;
-           if (index >= notes.length){
-               index = notes.length - jump;
+    private String getNote(String noteScale, String solfegeIn){
+        if (Arrays.asList(notes).contains(noteScale) && solfege.containsKey(solfegeIn)) {
+            int startIndex = 0;
+            for (String note: notes){
+                if (note.equals(noteScale)){ break;}
+                startIndex++;
             }
-           scale[counter] = notes[index];
-           counter++;
-           // if (counter > scale.length){break;} TODO: Handle error  
-       }
-        
-        return scale;
+
+            int jump = solfege.get(solfegeIn);
+            int index = startIndex + jump;
+
+            if (index >= notes.length){
+                index -= notes.length;
+            }
+
+            String note = notes[index];
+            return note;
+        }
+        else {
+            return "Failed";
+        }
+
     }  
 }
