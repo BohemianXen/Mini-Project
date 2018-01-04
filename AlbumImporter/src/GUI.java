@@ -5,6 +5,10 @@ import java.awt.*;
 import SwingUtils.SwingUtils;
 
 public class GUI {
+    JTextArea console = new JTextArea(25, 1 );
+    JLabel status = new JLabel("Status: Waiting", SwingConstants.CENTER);
+    JFileChooser fileChooser = new JFileChooser("C:\\Users\\blaze\\Desktop\\Media\\Music");
+
     GUI(){
 
         // Main frame initialisations
@@ -28,13 +32,11 @@ public class GUI {
         c.gridy = 0;
         main.add(title, c);
 
-        JLabel status = new JLabel("Status: Waiting", SwingConstants.CENTER);
         status.setFont(new Font(font, Font.PLAIN, 12));
         c.gridy = 3;
         main.add(status, c);
 
         // File browser
-        JFileChooser fileChooser = new JFileChooser("C:\\Users\\blaze\\Desktop\\Media\\Music");
         fileChooser.setFont(new Font(font, Font.PLAIN, 12));
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -57,7 +59,6 @@ public class GUI {
         main.add(run, c);
 
         // Console
-        JTextArea console = new JTextArea(25, 1 );
         console.setEditable(false);
         console.setBorder(new TitledBorder("Console"));
         JScrollPane scroller = new JScrollPane(console);
@@ -70,6 +71,10 @@ public class GUI {
         main.add(scroller, c);
 
         main.setVisible(true);
+    }
+
+    protected void UpdateLog(String line){
+       this.console.append(line + "\n");
     }
 
     public static void main(String[] args){
